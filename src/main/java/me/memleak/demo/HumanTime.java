@@ -20,7 +20,7 @@ public class HumanTime {
   private static final int WEEK = 7 * DAY;
   private static final int MONTH = 30 * DAY;
   private static final int YEAR = 365 * DAY;
-  private static final Map<Integer, String> TIMES_TEXT_MAP = new LinkedHashMap<>(6);
+  private static final Map<Integer, String> TIMES_TEXT_MAP = new LinkedHashMap<>(7);
 
   static {
     TIMES_TEXT_MAP.put(YEAR, "%d years");
