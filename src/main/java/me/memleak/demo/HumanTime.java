@@ -1,9 +1,15 @@
 package me.memleak.demo;
 
-import java.util.Iterator;
+import static java.util.stream.Collectors.joining;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.ToIntBiFunction;
 
 public class HumanTime {
 
@@ -26,31 +32,29 @@ public class HumanTime {
     TIMES_TEXT_MAP.put(SECOND, "%d seconds");
   }
 
-  public String inHumanTime(final int input) {
+  public String applyTo(int input) {
     if (!isValidInput(input)) {
       throw new IllegalArgumentException("Invalid input");
     }
 
-    StringBuilder builder = new StringBuilder();
     if (input == 0) {
-      builder.append("Zero Time.");
+      return "No Time.";
     }
 
-    int remaining = input;
-    Iterator<Entry<Integer, String>> ita = TIMES_TEXT_MAP.entrySet().iterator();
-    while (ita.hasNext() && remaining > 0) {
-      Map.Entry<Integer, String> keyval = ita.next();
+    AtomicInteger ai = new AtomicInteger(input);
+    return TIMES_TEXT_MAP.entrySet().stream()
+        .map(keyValue -> evaluate(ai.getAndUpdate(v -> v % keyValue.getKey()), keyValue))
+        .filter(Objects::nonNull)
+        .collect(joining(" "));
+  }
 
-      int amout = remaining / keyval.getKey();
-      if (amout > 0) {
-        builder.append(String.format(keyval.getValue(), amout));
-        builder.append(" ");
-      }
-
-      remaining = remaining % keyval.getKey();
+  private String evaluate(int value, Entry<Integer, String> entry) {
+    int amount = value / entry.getKey();
+    if (amount <= 0) {
+      return null;
     }
 
-    return builder.toString();
+    return String.format(entry.getValue(), amount);
   }
 
   private boolean isValidInput(int input) {
