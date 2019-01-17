@@ -1,85 +1,60 @@
 package me.memleak.demo;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Before;
 import org.junit.Test;
 
-public class HumanTimeTest {
-
-  private HumanTime humanTime;
+public class HumanTimeTest extends CommonTimeTest<HumanTime> {
 
   @Before
   public void setUp() {
-    humanTime = new HumanTime();
+    timeConverter = new HumanTime();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void invalidInput() {
-    humanTime.applyTo(-1);
+    timeConverter.applyTo(-1);
   }
 
   @Test
   public void zero() {
-    String result = humanTime.applyTo(0);
-    assertThat(result).isEqualTo("No Time.");
+    testWithParams(0, "No Time.");
   }
 
   @Test
   public void seconds() {
-    String result = humanTime.applyTo(59);
-    assertThat(result).isEqualTo("59 seconds");
-
-    result = humanTime.applyTo(1);
-    assertThat(result).isEqualTo("1 seconds");
+    testWithParams(1, "1 seconds");
+    testWithParams(59, "59 seconds");
   }
 
   @Test
   public void minutes() {
-    String result = humanTime.applyTo(60);
-    assertThat(result).isEqualTo("1 minutes");
-
-    result = humanTime.applyTo(60 * 59);
-    assertThat(result).isEqualTo("59 minutes");
+    testWithParams(60, "1 minutes");
+    testWithParams(60 * 59, "59 minutes");
   }
 
   @Test
   public void days() {
-    String result = humanTime.applyTo(24 * 60 * 60);
-    assertThat(result).isEqualTo("1 days");
-
-    result = humanTime.applyTo(6 * 24 * 60 * 60);
-    assertThat(result).isEqualTo("6 days");
-
-    result = humanTime.applyTo(4 * 24 * 60 * 60);
-    assertThat(result).isEqualTo("4 days");
+    testWithParams(24 * 60 * 60, "1 days");
+    testWithParams(6 * 24 * 60 * 60, "6 days");
+    testWithParams(4 * 24 * 60 * 60, "4 days");
   }
 
   @Test
   public void weeks() {
-    String result = humanTime.applyTo(7 * 24 * 60 * 60);
-    assertThat(result).isEqualTo("1 weeks");
-
-    result = humanTime.applyTo(14 * 24 * 60 * 60);
-    assertThat(result).isEqualTo("2 weeks");
+    testWithParams(7 * 24 * 60 * 60, "1 weeks");
+    testWithParams(14 * 24 * 60 * 60, "2 weeks");
   }
 
   @Test
   public void months() {
-    String result = humanTime.applyTo(30 * 24 * 60 * 60);
-    assertThat(result).isEqualTo("1 months");
-
-    result = humanTime.applyTo(60 * 24 * 60 * 60);
-    assertThat(result).isEqualTo("2 months");
+    testWithParams(30 * 24 * 60 * 60, "1 months");
+    testWithParams(2 * 30 * 24 * 60 * 60, "2 months");
   }
 
   @Test
   public void someTimeInLife() {
-    String result = humanTime.applyTo(4_147_205);
-    assertThat(result).isEqualTo("1 months 2 weeks 4 days 5 seconds");
-
-    result = humanTime
-        .applyTo((30 * 24 * 60 * 60) + (14 * 24 * 60 * 60) + (4 * 24 * 60 * 60) + 5);
-    assertThat(result).isEqualTo("1 months 2 weeks 4 days 5 seconds");
+    testWithParams(4_147_205, "1 months 2 weeks 4 days 5 seconds");
+    testWithParams((30 * 24 * 60 * 60) + (14 * 24 * 60 * 60) + (4 * 24 * 60 * 60) + 5,
+        "1 months 2 weeks 4 days 5 seconds");
   }
 }
