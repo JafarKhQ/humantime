@@ -1,13 +1,12 @@
 package me.memleak.demo;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class HumanTimeTest extends CommonTimeTest<HumanTime> {
 
-  @Before
-  public void setUp() {
-    timeConverter = new HumanTime();
+  @Override
+  Class<HumanTime> getClazz() {
+    return HumanTime.class;
   }
 
   @Test(expected = IllegalArgumentException.class)

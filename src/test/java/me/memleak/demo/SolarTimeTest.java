@@ -1,13 +1,12 @@
 package me.memleak.demo;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class SolarTimeTest extends CommonTimeTest<SolarTime> {
 
-  @Before
-  public void setUp() {
-    timeConverter = new SolarTime();
+  @Override
+  Class<SolarTime> getClazz() {
+    return SolarTime.class;
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -34,6 +33,4 @@ public class SolarTimeTest extends CommonTimeTest<SolarTime> {
     // See told you
     testWithParams((3 * 499) + 360 + 110, "2 Mars 1 Venus 87 seconds");
   }
-
-
 }
