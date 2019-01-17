@@ -17,13 +17,13 @@ public class HumanTime extends AbstractTimeConverter {
   }
 
   @Override
-  protected void initTimeUnits(Map<Integer, String> timeUnites) {
-    timeUnites.put(YEAR, "%d years");
-    timeUnites.put(MONTH, "%d months");
-    timeUnites.put(WEEK, "%d weeks");
-    timeUnites.put(DAY, "%d days");
-    timeUnites.put(HOUR, "%d hours");
-    timeUnites.put(MINUTE, "%d minutes");
-    timeUnites.put(SECOND, "%d seconds");
+  protected void initTimeUnits(Map<Integer, String> timeUnits) {
+    timeUnits.put(YEAR, "%d years");
+    timeUnits.put(MONTH, "%d months");
+    timeUnits.put(WEEK, "%d weeks");
+    timeUnits.put(DAY, "%d days");
+    timeUnits.put(HOUR, "%d hours");
+    timeUnits.put(MINUTE, "%d minutes");
+    timeUnits.put(SECOND, "%d seconds");
   }
 }
