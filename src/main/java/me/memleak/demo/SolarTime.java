@@ -1,7 +1,9 @@
 package me.memleak.demo;
 
+import javax.inject.Singleton;
 import java.util.Map;
 
+@Singleton
 public class SolarTime extends AbstractTimeConverter {
   private static final int PLUTO = 19680;
   private static final int NEPTUNE = 14998;

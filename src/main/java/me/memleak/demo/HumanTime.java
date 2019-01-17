@@ -1,7 +1,9 @@
 package me.memleak.demo;
 
+import javax.inject.Singleton;
 import java.util.Map;
 
+@Singleton
 public class HumanTime extends AbstractTimeConverter {
   private static final int SECOND = 1;
   private static final int MINUTE = 60 * SECOND;
