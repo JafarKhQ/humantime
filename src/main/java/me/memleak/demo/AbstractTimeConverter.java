@@ -1,10 +1,12 @@
 package me.memleak.demo;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static java.util.Comparator.reverseOrder;
+import static java.util.Map.Entry.comparingByKey;
 import static java.util.stream.Collectors.joining;
 
 public abstract class AbstractTimeConverter {
@@ -13,7 +15,7 @@ public abstract class AbstractTimeConverter {
   private final Map<Integer, String> timeUnits;
 
   public AbstractTimeConverter() {
-    timeUnits = new LinkedHashMap<>(timeUnitsCount());
+    timeUnits = new HashMap<>(timeUnitsCount());
     initTimeUnits(timeUnits);
   }
 
@@ -30,6 +32,7 @@ public abstract class AbstractTimeConverter {
 
     AtomicInteger ai = new AtomicInteger(input);
     return timeUnits.entrySet().stream()
+        .sorted(comparingByKey(reverseOrder()))
         .map(keyValue -> evaluate(ai.getAndUpdate(v -> v % keyValue.getKey()), keyValue))
         .filter(Objects::nonNull)
         .collect(joining(timeDelimiter()));
